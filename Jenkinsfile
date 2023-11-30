@@ -2,51 +2,31 @@ pipeline {
     agent any
 
     stages {
+        stage('Git') {
+            steps {
+                script {
+                    // Build Docker image
+                    git 'https://github.com/pavan2115md/docker_task.git'
+                }
+            }
+        }
+
         stage('Build') {
             steps {
                 script {
-                    // This step can be used for any pre-build actions if needed
-                }
-            }
-        }
-
-        stage('Test') {
-            steps {
-                script {
                     // Run tests if needed
-                    sh 'python3 -m unittest test_app.py'
+                    sh 'docker build -t pythonubuntu .'
                 }
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Run') {
             steps {
                 script {
-                    // Build Docker image for the Python script
-                    docker.build("my-python-app:${env.ce32d1c45494 }")
+                    // Deploy the Docker image as needed
+                    sh 'docker run -i pythonubuntu'
                 }
             }
-        }
-
-        stage('Run Docker Container') {
-            steps {
-                script {
-                    // Run the Docker container
-                    docker.image("my-python-app:${env.ce32d1c45494 }").run()
-                }
-            }
-        }
-    }
-
-    post {
-        success {
-            // Do something on successful build
-            echo 'Build successful!'
-        }
-        failure {
-            // Do something on build failure
-            echo 'Build failed!'
         }
     }
 }
-
