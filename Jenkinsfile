@@ -23,7 +23,7 @@ pipeline {
             steps {
                 script {
                     // Build Docker image for the Python script
-                    docker.build("my-python-app:${env.BUILD_ID}")
+                    docker.build("my-python-app:${env.ce32d1c45494 }")
                 }
             }
         }
@@ -32,7 +32,7 @@ pipeline {
             steps {
                 script {
                     // Run the Docker container
-                    docker.image("my-python-app:${env.BUILD_ID}").run()
+                    docker.image("my-python-app:${env.ce32d1c45494 }").run()
                 }
             }
         }
